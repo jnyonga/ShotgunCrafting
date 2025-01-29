@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerController = GetComponent<CharacterController>();
+    }
+    private void Start()
+    {
+        Cursor.visible = false;
     }
     private void Update()
     {
@@ -58,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
         //stopped performing context
         else
         {
-
+            input = Vector2.zero;
         }
     }
 
