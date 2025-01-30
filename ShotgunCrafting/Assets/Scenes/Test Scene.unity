@@ -180,6 +180,7 @@ Transform:
   - {fileID: 1357625379}
   - {fileID: 658540162}
   - {fileID: 1875374809}
+  - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &248140718
@@ -205,6 +206,9 @@ MonoBehaviour:
   jumpHeight: 3.5
   numberOfJumps: 0
   maxNumberOfJumps: 2
+  cameraTransfrom: {fileID: 330585546}
+  tiltAngle: 15
+  resetSpeed: 10
 --- !u!114 &248140719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,7 +491,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1365626421}
-  m_Father: {fileID: 658540162}
+  m_Father: {fileID: 248140717}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
@@ -682,8 +686,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 330585546}
+  m_Children: []
   m_Father: {fileID: 248140717}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517

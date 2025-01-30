@@ -22,6 +22,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private int numberOfJumps = 0;
     [SerializeField] private int maxNumberOfJumps = 2;
 
+    [Header("-------------- Camera Stuff --------------")]
+    [SerializeField] public Transform cameraTransfrom;
+    public float tiltAngle = 45f;
+    public float resetSpeed = 5f;
+
+    private bool isMovingHorizontal = false;
+    private bool isMovingVertical = false;
+    private bool isResetting = false;
+
     private void Awake()
     {
         playerController = GetComponent<CharacterController>();
@@ -30,6 +39,10 @@ public class PlayerMovement : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+    private void FixedUpdate()
+    {
+        CameraMovement();
     }
     private void Update()
     {
@@ -98,4 +111,65 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    void RotateCamera(Vector3 rotationAxis)
+    {
+        Quaternion targetRotation = Quaternion.Euler(rotationAxis * tiltAngle);
+        cameraTransfrom.localRotation = Quaternion.Slerp(cameraTransfrom.localRotation,targetRotation, Time.deltaTime * 5f);
+    }
+
+    void ResetCameraRotation()
+    {
+        //resets camera gradually
+        Quaternion targetRotation = Quaternion.identity;
+        cameraTransfrom.localRotation = Quaternion.Slerp(cameraTransfrom.localRotation, targetRotation, Time.deltaTime * resetSpeed);
+    }
+
+    void CameraMovement()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        if (horizontalInput > 0)
+        {
+            Debug.Log("Moving Right");
+            RotateCamera(Vector3.back);
+            isMovingHorizontal = true;
+            isResetting = false;
+        }
+        else if (horizontalInput < 0)
+        {
+            Debug.Log("Moving Left");
+            RotateCamera(Vector3.forward);
+            isMovingHorizontal = true;
+            isResetting = false;
+        }
+        else
+        {
+            isMovingVertical = false;
+        }
+
+        //check if moving forward or backward
+        if (verticalInput < 0)
+        {
+            Debug.Log("Moving Backward");
+            RotateCamera(Vector3.forward);
+            isMovingVertical = true;
+            isResetting = false;
+        }
+        else
+        {
+            isMovingHorizontal = false;
+        }
+
+        //player not moving horizontally or vertically
+        if (!isMovingHorizontal && !isMovingVertical && !isResetting)
+        {
+            isResetting = true;
+        }
+
+        if (isResetting)
+        {
+            ResetCameraRotation();
+        }
+    }
 }
