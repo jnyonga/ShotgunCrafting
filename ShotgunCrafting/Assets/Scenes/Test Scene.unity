@@ -208,7 +208,7 @@ MonoBehaviour:
   maxNumberOfJumps: 2
   cameraTransfrom: {fileID: 330585546}
   tiltAngle: 15
-  resetSpeed: 10
+  resetSpeed: 5
 --- !u!114 &248140719
 MonoBehaviour:
   m_ObjectHideFlags: 0

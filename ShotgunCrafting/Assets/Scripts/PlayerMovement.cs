@@ -152,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
         if (verticalInput < 0)
         {
             Debug.Log("Moving Backward");
-            RotateCamera(Vector3.forward);
+            //RotateCamera(Vector3.forward);
             isMovingVertical = true;
             isResetting = false;
         }
