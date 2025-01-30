@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     bool shouldJump = false;
     [SerializeField] float jumpHeight = 3.5f;
 
+    [SerializeField] private int numberOfJumps = 0;
+    [SerializeField] private int maxNumberOfJumps = 2;
+
     private void Awake()
     {
         playerController = GetComponent<CharacterController>();
@@ -34,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             verticalVelocity.y = 0;
+            numberOfJumps = 0;
         }
 
         Vector3 movementVelocity = (transform.right * input.x + transform.forward * input.y) * speed;
@@ -70,15 +75,27 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        if (isGrounded)
+        if (isGrounded || numberOfJumps < maxNumberOfJumps)
         {
             verticalVelocity.y = Mathf.Sqrt(-2 * jumpHeight * gravity);
+            numberOfJumps++;
+            shouldJump = false;
         }
-        shouldJump = false;
+        
     }
 
-    public void OnJump()
+    public void OnJump(InputAction.CallbackContext context)
     {
-        shouldJump = true;
+        if (context.started)
+        {
+            shouldJump = true;
+        }
+        //stopped performing context
+        else if (context.canceled)
+        {
+            shouldJump = false;
+        }
+        
     }
+
 }
