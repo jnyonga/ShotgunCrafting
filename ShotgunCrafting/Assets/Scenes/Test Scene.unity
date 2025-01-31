@@ -197,6 +197,7 @@ MonoBehaviour:
   input: {x: 0, y: 0}
   speed: 20
   gravity: -25
+  movementVelocity: {x: 0, y: 0, z: 0}
   verticalVelocity: {x: 0, y: 0, z: 0}
   groundLayer:
     serializedVersion: 2
@@ -488,7 +489,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1365626421}
+  - {fileID: 1391763620}
   m_Father: {fileID: 248140717}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &330585547
@@ -1009,12 +1010,12 @@ Transform:
   m_GameObject: {fileID: 1365626420}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.433, y: -0.39999998, z: 0.8}
+  m_LocalPosition: {x: 0, y: 0.0020000339, z: 0.50600004}
   m_LocalScale: {x: 0.3842, y: 0.2318, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1526209440}
-  m_Father: {fileID: 330585546}
+  m_Father: {fileID: 1391763620}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1365626422
 BoxCollider:
@@ -1113,6 +1114,65 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365626420}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b1321891b37c914e87c2ccaede68191, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseLookScript: {fileID: 248140720}
+  playerMovementScript: {fileID: 248140718}
+  sway: 1
+  swayRotation: 1
+  bobOffset: 0
+  bobSway: 0
+  step: 0.01
+  maxStepDistance: 0.06
+  rotationStep: 4
+  maxRotationStep: 5
+  speedCurve: 0
+  travelLimit: {x: 0.1, y: 0.1, z: 0.1}
+  bobLimit: {x: 0.01, y: 0.01, z: 0.01}
+  multiplier: {x: 10, y: 10, z: 10}
+--- !u!1 &1391763619
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1391763620}
+  - component: {fileID: 1391763621}
+  m_Layer: 0
+  m_Name: WeaponHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1391763620
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391763619}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.433, y: -0.402, z: 0.294}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1365626421}
+  m_Father: {fileID: 330585546}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1391763621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391763619}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b1321891b37c914e87c2ccaede68191, type: 3}
@@ -1129,9 +1189,9 @@ MonoBehaviour:
   rotationStep: 4
   maxRotationStep: 5
   speedCurve: 0
-  travelLimit: {x: 0.025, y: 0.025, z: 0.025}
+  travelLimit: {x: 0.01, y: 0.01, z: 0.01}
   bobLimit: {x: 0.01, y: 0.01, z: 0.01}
-  multiplier: {x: 10, y: 10, z: 10}
+  multiplier: {x: 5, y: 5, z: 5}
 --- !u!1 &1524976866
 GameObject:
   m_ObjectHideFlags: 0

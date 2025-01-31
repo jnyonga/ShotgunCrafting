@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float speed = 10f;
 
     [SerializeField] float gravity = -25f;
+    public Vector3 movementVelocity;
     public Vector3 verticalVelocity = Vector3.zero;
 
     [SerializeField] LayerMask groundLayer;
@@ -42,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
             numberOfJumps = 0;
         }
 
-        Vector3 movementVelocity = (transform.right * input.x + transform.forward * input.y) * speed;
+        movementVelocity = (transform.right * input.x + transform.forward * input.y) * speed;
 
         //moves player
         playerController.Move(movementVelocity * Time.deltaTime);
