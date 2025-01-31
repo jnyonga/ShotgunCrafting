@@ -394,8 +394,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseInput: {x: 0, y: 0}
-  sensitivityX: 100
-  sensitivityY: 0.5
+  sensitivityX: 50
+  sensitivityY: 0.25
   playerCamera: {fileID: 330585546}
   xClamp: 85
 --- !u!1 &330585543
