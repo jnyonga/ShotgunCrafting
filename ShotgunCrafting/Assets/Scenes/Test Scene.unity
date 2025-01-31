@@ -1132,6 +1132,7 @@ MonoBehaviour:
   speedCurve: 0
   travelLimit: {x: 0.1, y: 0.1, z: 0.1}
   bobLimit: {x: 0.01, y: 0.01, z: 0.01}
+  bobIntensity: 0
   multiplier: {x: 10, y: 10, z: 10}
 --- !u!1 &1391763619
 GameObject:
@@ -1189,9 +1190,10 @@ MonoBehaviour:
   rotationStep: 4
   maxRotationStep: 5
   speedCurve: 0
-  travelLimit: {x: 0.01, y: 0.01, z: 0.01}
+  travelLimit: {x: 0.1, y: 0.01, z: 0.1}
   bobLimit: {x: 0.01, y: 0.01, z: 0.01}
-  multiplier: {x: 5, y: 5, z: 5}
+  bobIntensity: 1
+  multiplier: {x: 2, y: 2, z: 2}
 --- !u!1 &1524976866
 GameObject:
   m_ObjectHideFlags: 0

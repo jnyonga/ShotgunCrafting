@@ -89,12 +89,13 @@ public class SwayAndBob : MonoBehaviour
 
     public Vector3 travelLimit = Vector3.one * 0.025f;
     public Vector3 bobLimit = Vector3.one * 0.01f;
+    public float bobIntensity = 1;
 
     Vector3 bobPosition;
     void BobOffset()
     {
         //used to generate our sin and cos waves
-        speedCurve += Time.deltaTime * (playerMovementScript.isGrounded ? playerMovementScript.movementVelocity.magnitude : 1f) + 0.01f;
+        speedCurve += Time.deltaTime * (playerMovementScript.isGrounded ? playerMovementScript.movementVelocity.magnitude/bobIntensity : 1f) + 0.01f;
 
         if (bobOffset == false)
         {
@@ -104,7 +105,7 @@ public class SwayAndBob : MonoBehaviour
 
         bobPosition.x = (curveCos * bobLimit.x * (playerMovementScript.isGrounded ? 1 : 0)) - (walkInput.x * travelLimit.x);
 
-        bobPosition.y = (curveSin * bobLimit.y) - (playerMovementScript.movementVelocity.y * travelLimit.y);
+        bobPosition.y = (curveSin * bobLimit.y) - (playerMovementScript.movementVelocity.y/bobIntensity * travelLimit.y);
 
         bobPosition.z = -(walkInput.y * travelLimit.z);
     }
