@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
-{
-    Vector2 input;
+{ 
+    public Vector2 input;
     CharacterController playerController;
     [SerializeField] float speed = 10f;
 
@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 verticalVelocity = Vector3.zero;
 
     [SerializeField] LayerMask groundLayer;
-    [SerializeField] bool isGrounded;
+    [SerializeField] public bool isGrounded;
     [SerializeField] GameObject groundCheck;
 
     bool shouldJump = false;
@@ -22,21 +22,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private int numberOfJumps = 0;
     [SerializeField] private int maxNumberOfJumps = 2;
 
-    //[Header("-------------- Camera Stuff --------------")]
+    
+    
     
 
     private void Awake()
     {
         playerController = GetComponent<CharacterController>();
+        
     }
     private void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-    }
-    private void FixedUpdate()
-    {
-        
     }
     private void Update()
     {
@@ -64,8 +62,10 @@ public class PlayerMovement : MonoBehaviour
         verticalVelocity.y += gravity * Time.deltaTime;
         playerController.Move(verticalVelocity * Time.deltaTime);
 
-        
+       
     }
+
+    
 
     public void Move_Event(InputAction.CallbackContext context)
     {
@@ -104,6 +104,6 @@ public class PlayerMovement : MonoBehaviour
         }
         
     }
-
     
+
 }

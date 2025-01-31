@@ -4,7 +4,7 @@ using UnityEngine.Windows;
 
 public class MouseLook : MonoBehaviour
 {
-    Vector2 mouseInput;
+    public Vector2 mouseInput;
 
     [SerializeField] float sensitivityX = 8f;
     [SerializeField] float sensitivityY = 0.5f;

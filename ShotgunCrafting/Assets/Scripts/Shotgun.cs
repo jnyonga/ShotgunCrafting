@@ -6,7 +6,7 @@ using UnityEngine.Windows;
 public class Shotgun : MonoBehaviour
 {
     public float damage = 6f;
-    int maxAmmo;
+    //int maxAmmo;
     [SerializeField] GameObject muzzle;
     [SerializeField] int ammo;
     [SerializeField] float maxDistance = 50f;
@@ -20,7 +20,7 @@ public class Shotgun : MonoBehaviour
      
 
         ammo = 6;
-        maxAmmo = 6;
+        //maxAmmo = 6;
 
         ray1 = new Ray(muzzle.transform.position, muzzle.transform.forward);
         ray2 = new Ray(muzzle.transform.position, Quaternion.Euler(-2, 1, 0) * muzzle.transform.forward);
