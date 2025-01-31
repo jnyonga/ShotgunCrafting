@@ -51,6 +51,12 @@ public class SwayAndBob : MonoBehaviour
     Vector3 swayOffset;
     void Sway()
     {
+        if(sway == false)
+        {
+            swayPos = Vector3.zero;
+            return;
+        }
+
         Vector3 invertLook = lookInput * -step;
         invertLook.x = Mathf.Clamp(invertLook.x, -maxStepDistance, maxStepDistance);
         invertLook.y = Mathf.Clamp(invertLook.y, -maxStepDistance, maxStepDistance);
@@ -63,6 +69,12 @@ public class SwayAndBob : MonoBehaviour
     Vector3 swayEulerRot;
     void SwayRotation()
     {
+        if (swayRotation == false)
+        {
+            swayEulerRot = Vector3.zero;
+            return;
+        }
+
         Vector2 invertLook = lookInput * -rotationStep;
         invertLook.x = Mathf.Clamp(invertLook.x, -maxRotationStep, maxRotationStep);
         invertLook.y = Mathf.Clamp(invertLook.y, -maxRotationStep, maxRotationStep);
@@ -84,19 +96,32 @@ public class SwayAndBob : MonoBehaviour
         //used to generate our sin and cos waves
         
     }
-    void BobRotation()
+    [Header("Bob Rotation")]
+    [SerializeField] public Vector3 multiplier;
+    Vector3 bobEulerRotation;
+    void BobRotation() //roll, pitch, yaw change as a result of walking
     {
+        if (bobSway == false)
+        {
+            bobEulerRotation = Vector3.zero;
+            return;
+        }
 
+        bobEulerRotation.x = (walkInput != Vector2.zero ? multiplier.x * (Mathf.Sin(2 * speedCurve)) : multiplier.x * (Mathf.Sin(2 * speedCurve) / 2)); //pitch
+
+        bobEulerRotation.y = (walkInput != Vector2.zero ? multiplier.y * curveCos : 0); //yaw
+        
+        bobEulerRotation.z = (walkInput != Vector2.zero ? multiplier.z * curveCos * walkInput.x : 0); //roll
     }
     float smooth = 10f;
     float smoothRot = 12f;
     void CompositePositionRotation()
     {
         //position
-        transform.localPosition = Vector3.Lerp(transform.localPosition, swayPos, Time.deltaTime * smooth);
+        transform.localPosition = Vector3.Lerp(transform.localPosition, swayPos + bobPosition, Time.deltaTime * smooth);
 
         //rotation
-        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(swayEulerRot), Time.deltaTime * smoothRot);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(swayEulerRot) * Quaternion.Euler(bobEulerRotation), Time.deltaTime * smoothRot);
     }
 
 }

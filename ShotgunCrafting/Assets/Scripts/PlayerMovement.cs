@@ -22,10 +22,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private int numberOfJumps = 0;
     [SerializeField] private int maxNumberOfJumps = 2;
 
-    
-    
-    
-
     private void Awake()
     {
         playerController = GetComponent<CharacterController>();
