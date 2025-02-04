@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 { 
@@ -30,8 +31,8 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+       Cursor.visible = false;
+       Cursor.lockState = CursorLockMode.Locked;
     }
     private void Update()
     {
@@ -47,8 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
         //moves player
         playerController.Move(movementVelocity * Time.deltaTime);
-        
-        
+
 
         if (shouldJump)
         {
@@ -102,5 +102,5 @@ public class PlayerMovement : MonoBehaviour
         
     }
     
-
+ 
 }
