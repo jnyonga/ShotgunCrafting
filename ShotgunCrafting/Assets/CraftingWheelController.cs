@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class CraftingWheelController : MonoBehaviour
 {
+    [SerializeField] Shotgun shotgunScript;
     public Animator anim;
     private bool craftingWheelSelected = false;
     public Image selectedItem;
@@ -12,22 +13,16 @@ public class CraftingWheelController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            craftingWheelSelected = true;
+            craftingWheelSelected = !craftingWheelSelected;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             isCrafting = true;
+            shotgunScript.canShoot = false;
+            Time.timeScale = 0.2f;
         }
         
-        if(isCrafting == false)
-        {
-            craftingWheelSelected = false;
-            Debug.Log("crafting wheel closed");
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            
-        }
 
         if (craftingWheelSelected)
         {
@@ -36,6 +31,11 @@ public class CraftingWheelController : MonoBehaviour
         else
         {
             anim.SetBool("OpenCraftingWheel", false);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            isCrafting = false;
+            shotgunScript.canShoot = true;
+            Time.timeScale = 1f;
         }
 
         switch(craftingID)
@@ -45,11 +45,11 @@ public class CraftingWheelController : MonoBehaviour
                 break;
             case 1: //upgrade selected
                 Debug.Log("upgrading");
-                isCrafting = false;
+               
                 break;
             case 2: //parry bullet
                 Debug.Log("parry bullet crafted");
-                isCrafting = false;
+                
                 break;
         }
     }

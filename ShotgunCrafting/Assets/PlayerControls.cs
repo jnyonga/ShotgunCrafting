@@ -134,6 +134,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""e74e584e-a3e5-490b-a24f-1e6432c11811"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -552,6 +561,17 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""CraftingWheel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9f8c439-17a5-449d-bcca-d514f034b58c"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1151,6 +1171,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_PlayerControls_Next = m_PlayerControls.FindAction("Next", throwIfNotFound: true);
         m_PlayerControls_Sprint = m_PlayerControls.FindAction("Sprint", throwIfNotFound: true);
         m_PlayerControls_CraftingWheel = m_PlayerControls.FindAction("CraftingWheel", throwIfNotFound: true);
+        m_PlayerControls_Reload = m_PlayerControls.FindAction("Reload", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1242,6 +1263,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_Next;
     private readonly InputAction m_PlayerControls_Sprint;
     private readonly InputAction m_PlayerControls_CraftingWheel;
+    private readonly InputAction m_PlayerControls_Reload;
     public struct PlayerControlsActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1258,6 +1280,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Next => m_Wrapper.m_PlayerControls_Next;
         public InputAction @Sprint => m_Wrapper.m_PlayerControls_Sprint;
         public InputAction @CraftingWheel => m_Wrapper.m_PlayerControls_CraftingWheel;
+        public InputAction @Reload => m_Wrapper.m_PlayerControls_Reload;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1303,6 +1326,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @CraftingWheel.started += instance.OnCraftingWheel;
             @CraftingWheel.performed += instance.OnCraftingWheel;
             @CraftingWheel.canceled += instance.OnCraftingWheel;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -1343,6 +1369,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @CraftingWheel.started -= instance.OnCraftingWheel;
             @CraftingWheel.performed -= instance.OnCraftingWheel;
             @CraftingWheel.canceled -= instance.OnCraftingWheel;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -1537,6 +1566,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnNext(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnCraftingWheel(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
