@@ -4,12 +4,18 @@ using UnityEngine.UI;
 public class CraftingWheelController : MonoBehaviour
 {
     [SerializeField] Shotgun shotgunScript;
+    [SerializeField] PlayerResources playerResourcesScript;
+    [SerializeField] CraftingBar craftingBarScript;
     public Animator anim;
     private bool craftingWheelSelected = false;
     public Image selectedItem;
     public Sprite noImage;
     public static int craftingID;
     public bool isCrafting = false;
+
+    [Header("Crafting Settings")]
+    [SerializeField] int upgradeCost = 20;
+
 
     private void Update()
     {
@@ -44,7 +50,12 @@ public class CraftingWheelController : MonoBehaviour
                 selectedItem.sprite = noImage;
                 break;
             case 1: //upgrade selected
-                Debug.Log("upgrading");
+                if(playerResourcesScript.currentScrap >= upgradeCost)
+                {
+                    Debug.Log("upgrading");
+                    playerResourcesScript.currentScrap -= upgradeCost;
+                    craftingBarScript.isUpgrading = true;
+                }
                
                 break;
             case 2: //parry bullet

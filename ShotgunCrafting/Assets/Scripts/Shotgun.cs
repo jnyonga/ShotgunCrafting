@@ -3,6 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+using TMPro;
 
 public class Shotgun : MonoBehaviour
 {
@@ -16,8 +17,12 @@ public class Shotgun : MonoBehaviour
     [SerializeField] float reloadSpeed = 0.5f;
 
     [Header("Durability Settings")]
+    [SerializeField] TextMeshProUGUI durabilityText;
     [SerializeField] float durability = 100f;
     [SerializeField] float durabilityLostOnShot = 10f;
+    [SerializeField] float durabilityLostPerSecond = 3f;
+    [SerializeField] float durabilityGain = 40;
+    [SerializeField] float durabilityGainWeak = 25;
 
 
     Ray ray1;
@@ -37,7 +42,11 @@ public class Shotgun : MonoBehaviour
     }
     private void Update()
     {
-        
+        durabilityText.text = durability.ToString();
+    }
+    private void FixedUpdate()
+    {
+        DurabilityDrain();
     }
     public void Shoot_Event(InputAction.CallbackContext context)
     {
@@ -131,5 +140,25 @@ public class Shotgun : MonoBehaviour
         
     }
 
+    void DurabilityDrain()
+    {
+        if (durability > 0)
+        {
+            durability -= Time.deltaTime * durabilityLostPerSecond;
+        }
+        else
+        {
+            durability = 0;
+        }
+    }
     
+    public void GainDurability()
+    {
+        durability += durabilityGain;
+    }
+
+    public void GainSmallDurability()
+    {
+        durability += durabilityGainWeak;
+    }
 }
