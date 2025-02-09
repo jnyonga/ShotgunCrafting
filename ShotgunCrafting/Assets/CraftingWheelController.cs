@@ -25,7 +25,7 @@ public class CraftingWheelController : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             isCrafting = true;
-            shotgunScript.canShoot = false;
+            //shotgunScript.canShoot = false;
             Time.timeScale = 0.2f;
         }
         
@@ -40,7 +40,7 @@ public class CraftingWheelController : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             isCrafting = false;
-            shotgunScript.canShoot = true;
+            //shotgunScript.canShoot = true;
             Time.timeScale = 1f;
         }
 

@@ -127,7 +127,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""CraftingWheel"",
+                    ""name"": ""Craft"",
                     ""type"": ""Button"",
                     ""id"": ""ef15f9bf-0a62-4275-8af9-41e1e99576a7"",
                     ""expectedControlType"": """",
@@ -560,7 +560,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""CraftingWheel"",
+                    ""action"": ""Craft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1170,7 +1170,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_PlayerControls_Previous = m_PlayerControls.FindAction("Previous", throwIfNotFound: true);
         m_PlayerControls_Next = m_PlayerControls.FindAction("Next", throwIfNotFound: true);
         m_PlayerControls_Sprint = m_PlayerControls.FindAction("Sprint", throwIfNotFound: true);
-        m_PlayerControls_CraftingWheel = m_PlayerControls.FindAction("CraftingWheel", throwIfNotFound: true);
+        m_PlayerControls_Craft = m_PlayerControls.FindAction("Craft", throwIfNotFound: true);
         m_PlayerControls_Reload = m_PlayerControls.FindAction("Reload", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -1262,7 +1262,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_Previous;
     private readonly InputAction m_PlayerControls_Next;
     private readonly InputAction m_PlayerControls_Sprint;
-    private readonly InputAction m_PlayerControls_CraftingWheel;
+    private readonly InputAction m_PlayerControls_Craft;
     private readonly InputAction m_PlayerControls_Reload;
     public struct PlayerControlsActions
     {
@@ -1279,7 +1279,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Previous => m_Wrapper.m_PlayerControls_Previous;
         public InputAction @Next => m_Wrapper.m_PlayerControls_Next;
         public InputAction @Sprint => m_Wrapper.m_PlayerControls_Sprint;
-        public InputAction @CraftingWheel => m_Wrapper.m_PlayerControls_CraftingWheel;
+        public InputAction @Craft => m_Wrapper.m_PlayerControls_Craft;
         public InputAction @Reload => m_Wrapper.m_PlayerControls_Reload;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
@@ -1323,9 +1323,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
-            @CraftingWheel.started += instance.OnCraftingWheel;
-            @CraftingWheel.performed += instance.OnCraftingWheel;
-            @CraftingWheel.canceled += instance.OnCraftingWheel;
+            @Craft.started += instance.OnCraft;
+            @Craft.performed += instance.OnCraft;
+            @Craft.canceled += instance.OnCraft;
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
@@ -1366,9 +1366,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
-            @CraftingWheel.started -= instance.OnCraftingWheel;
-            @CraftingWheel.performed -= instance.OnCraftingWheel;
-            @CraftingWheel.canceled -= instance.OnCraftingWheel;
+            @Craft.started -= instance.OnCraft;
+            @Craft.performed -= instance.OnCraft;
+            @Craft.canceled -= instance.OnCraft;
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
@@ -1565,7 +1565,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnPrevious(InputAction.CallbackContext context);
         void OnNext(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
-        void OnCraftingWheel(InputAction.CallbackContext context);
+        void OnCraft(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
     }
     public interface IUIActions

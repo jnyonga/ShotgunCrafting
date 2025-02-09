@@ -8,7 +8,9 @@ public class PlayerMovement : MonoBehaviour
 { 
     public Vector2 input;
     CharacterController playerController;
-    [SerializeField] float speed = 10f;
+    PlayerResources playerResourcesScript;
+    public float currentSpeed;
+    public float baseSpeed = 10f;
 
     [SerializeField] float gravity = -25f;
     public Vector3 movementVelocity;
@@ -27,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         playerController = GetComponent<CharacterController>();
+        playerResourcesScript = GetComponent<PlayerResources>();
         
     }
     private void Start()
@@ -44,7 +47,10 @@ public class PlayerMovement : MonoBehaviour
             numberOfJumps = 0;
         }
 
-        movementVelocity = (transform.right * input.x + transform.forward * input.y) * speed;
+        //speed based on rage
+        currentSpeed = baseSpeed + ((playerResourcesScript.currentRage / 20) * 1.2f);
+
+        movementVelocity = (transform.right * input.x + transform.forward * input.y) * currentSpeed;
 
         //moves player
         playerController.Move(movementVelocity * Time.deltaTime);

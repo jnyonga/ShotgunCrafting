@@ -7,23 +7,36 @@ using TMPro;
 
 public class Shotgun : MonoBehaviour
 {
-    public float damage = 6f;
-    public bool canShoot = true;
-    //int maxAmmo;
+    [Header("Shotgun Parameters")]
+    Renderer shotgunRenderer;
+    [SerializeField] Material[] shotgunMaterials;
+    private float damage;
+    public float lvlOneDamage;
+    public float lvlTwoDamage;
+    public float lvlThreeDamage;
+    private bool canShoot = true;
+    [SerializeField] TextMeshProUGUI ammoCounterText;
     [SerializeField] GameObject muzzle;
     [SerializeField] int ammo;
     [SerializeField] float maxDistance = 50f;
     private bool isReloading = false;
     [SerializeField] float reloadSpeed = 0.5f;
 
+    public bool isLvlOne;
+    public bool isLvlTwo;
+    public bool isLvlThree;
+
     [Header("Durability Settings")]
     [SerializeField] TextMeshProUGUI durabilityText;
     [SerializeField] float durability = 100f;
-    [SerializeField] float durabilityLostOnShot = 10f;
+    [SerializeField] float durabilityLostOnShot = 5f;
     [SerializeField] float durabilityLostPerSecond = 3f;
     [SerializeField] float durabilityGain = 40;
     [SerializeField] float durabilityGainWeak = 25;
+    [SerializeField] float durabilityFail = 10f;
 
+    [Header("Object References")]
+    [SerializeField] PlayerResources playerResourcesScript;
 
     Ray ray1;
     Ray ray2;
@@ -31,7 +44,7 @@ public class Shotgun : MonoBehaviour
 
     private void Start()
     {
-     
+     shotgunRenderer = GetComponent<Renderer>();
 
         ammo = 2;
         //maxAmmo = 2;
@@ -43,6 +56,34 @@ public class Shotgun : MonoBehaviour
     private void Update()
     {
         durabilityText.text = durability.ToString();
+        ammoCounterText.text = ammo.ToString(); 
+
+        if(ammo == 0)
+        {
+            Reload();
+        }
+
+        //Change material based on level
+        //Change damage based on level
+
+        if (isLvlOne)
+        {
+            shotgunRenderer.material = shotgunMaterials[0];
+            damage = lvlOneDamage;
+
+        }
+        else if (isLvlTwo)
+        {
+            shotgunRenderer.material = shotgunMaterials[1];
+            damage = lvlTwoDamage;
+        }
+        else
+        {
+            shotgunRenderer.material = shotgunMaterials[2];
+            damage = lvlThreeDamage;
+        }
+        
+
     }
     private void FixedUpdate()
     {
@@ -99,15 +140,13 @@ public class Shotgun : MonoBehaviour
         --ammo;
         durability -= durabilityLostOnShot;
        
-            //Debug.Log("Shoot");
+        ray1.origin = muzzle.transform.position;
+        ray2.origin = muzzle.transform.position;
+        ray3.origin = muzzle.transform.position;
 
-            ray1.origin = muzzle.transform.position;
-            ray2.origin = muzzle.transform.position;
-            ray3.origin = muzzle.transform.position;
-
-            ray1.origin = muzzle.transform.forward;
-            ray2.origin = Quaternion.Euler(-2, 1, 0) * muzzle.transform.forward;
-            ray3.origin = Quaternion.Euler(-2, -1, 0) * muzzle.transform.forward;
+        ray1.origin = muzzle.transform.forward;
+        ray2.origin = Quaternion.Euler(-2, 1, 0) * muzzle.transform.forward;
+        ray3.origin = Quaternion.Euler(-2, -1, 0) * muzzle.transform.forward;
 
             if (Physics.Raycast(muzzle.transform.position, muzzle.transform.forward, out RaycastHit hit1, maxDistance))
             {
@@ -115,6 +154,7 @@ public class Shotgun : MonoBehaviour
                 if (hit1.collider.gameObject.GetComponent<EnemyHealth>() != null)
                 {
                     hit1.collider.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
+                    playerResourcesScript.currentRage += damage;
                 }
                 
 
@@ -126,6 +166,7 @@ public class Shotgun : MonoBehaviour
                 if (hit2.collider.gameObject.GetComponent<EnemyHealth>() != null)
                 {
                     hit2.collider.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
+                    playerResourcesScript.currentRage += damage;
                 }
             }
 
@@ -135,6 +176,7 @@ public class Shotgun : MonoBehaviour
                 if (hit3.collider.gameObject.GetComponent<EnemyHealth>() != null)
                 {
                     hit3.collider.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
+                    playerResourcesScript.currentRage += damage;
                 }
             }
         
@@ -150,6 +192,30 @@ public class Shotgun : MonoBehaviour
         {
             durability = 0;
         }
+
+        if (durability > 300)
+        {
+            durability = 300;
+        }
+
+        if (durability < 100)
+        {
+            isLvlOne = true;
+            isLvlTwo = false;
+            isLvlThree = false;
+        }
+        else if (durability >= 100 && durability < 200)
+        {
+            isLvlOne = false;
+            isLvlTwo = true;
+            isLvlThree = false;
+        }
+        else
+        {
+            isLvlOne = false;
+            isLvlTwo = false;
+            isLvlThree = true;
+        }
     }
     
     public void GainDurability()
@@ -160,5 +226,10 @@ public class Shotgun : MonoBehaviour
     public void GainSmallDurability()
     {
         durability += durabilityGainWeak;
+    }
+
+    public void FailDurability()
+    {
+        durability -= durabilityFail;
     }
 }

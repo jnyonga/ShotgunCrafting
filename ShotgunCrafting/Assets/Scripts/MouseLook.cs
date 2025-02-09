@@ -4,7 +4,6 @@ using UnityEngine.Windows;
 
 public class MouseLook : MonoBehaviour
 {
-    [SerializeField] CraftingWheelController craftingWheelController;
     public Vector2 mouseInput;
 
     [SerializeField] float sensitivityX = 8f;
@@ -30,10 +29,9 @@ public class MouseLook : MonoBehaviour
     {
         if (context.performed)
         {
-            if (craftingWheelController.isCrafting == false)
-            {
-                mouseInput.x = context.ReadValue<float>();
-            }
+            
+            mouseInput.x = context.ReadValue<float>();
+            
             
         }
         //stopped performing context
@@ -46,10 +44,9 @@ public class MouseLook : MonoBehaviour
     {
         if (context.performed)
         {
-            if (craftingWheelController.isCrafting == false)
-            {
+            
                 mouseInput.y = context.ReadValue<float>();
-            }
+            
         }
         //stopped performing context
         else
