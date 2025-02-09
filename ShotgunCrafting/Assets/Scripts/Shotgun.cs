@@ -70,7 +70,9 @@ public class Shotgun : MonoBehaviour
         if (durability <= 0)
         {
             damage = brokenDamage;
+            shotgunRenderer.material = shotgunMaterials[0];
         }
+
         if (isLvlOne & durability != 0)
         {
             shotgunRenderer.material = shotgunMaterials[0];
@@ -82,7 +84,7 @@ public class Shotgun : MonoBehaviour
             shotgunRenderer.material = shotgunMaterials[1];
             damage = lvlTwoDamage;
         }
-        else
+        else if (isLvlThree)
         {
             shotgunRenderer.material = shotgunMaterials[2];
             damage = lvlThreeDamage;

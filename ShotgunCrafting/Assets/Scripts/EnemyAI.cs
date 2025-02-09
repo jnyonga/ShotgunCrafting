@@ -18,6 +18,8 @@ public class EnemyAI : MonoBehaviour
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public GameObject projectile;
+    public float attackForwardForce = 40f;
+    public float attackUpwardForce = 4f;
 
     //States
     public float sightRange, attackRange;
@@ -84,8 +86,8 @@ public class EnemyAI : MonoBehaviour
         {
             //attack code
             Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 4f, ForceMode.Impulse);
+            rb.AddForce(transform.forward * attackForwardForce, ForceMode.Impulse);
+            rb.AddForce(transform.up * attackUpwardForce, ForceMode.Impulse);
 
             Instantiate(projectile, transform.position, Quaternion.identity);
 

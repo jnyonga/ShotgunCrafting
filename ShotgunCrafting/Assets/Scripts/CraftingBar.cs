@@ -6,6 +6,7 @@ public class CraftingBar : MonoBehaviour
 {
     [Header("Script Refs")]
     [SerializeField] Shotgun shotgunScript;
+    [SerializeField] PlayerHealth playerHealthScript;
     [SerializeField] float redZoneMin = 0.4f;
     [SerializeField] float redZoneMax = 0.65f;
     [SerializeField] float greenZoneMin = 0.85f;
@@ -85,6 +86,9 @@ public class CraftingBar : MonoBehaviour
             {
                 Debug.Log("Gain Large durability " + upgradeSlider.value);
                 shotgunScript.GainDurability();
+
+                Debug.Log("Gain Health");
+                playerHealthScript.GainHealth();
                 isUpgrading = false;
                 yield return new WaitForSeconds(0.5f);
                 upgradeSlider.value = 0;
@@ -102,7 +106,6 @@ public class CraftingBar : MonoBehaviour
         }
        
     }
-
     void HideUI()
     {
         gameObject.transform.localScale = Vector3.zero;

@@ -7,6 +7,7 @@ public class PlayerResources : MonoBehaviour
     [SerializeField] TextMeshProUGUI scrapText;
     [SerializeField] Image rageBar;
     [SerializeField] public int currentScrap = 0;
+    [SerializeField] public int scraptLostOnHit = 10;
     [SerializeField] public float currentRage = 0f;
     float maxRage = 200f;
 
@@ -24,6 +25,9 @@ public class PlayerResources : MonoBehaviour
 
         if (currentRage < 0f)
             currentRage = 0f;
+
+        if (currentScrap < 0)
+            currentScrap = 0;
     }
     private void FixedUpdate()
     {
@@ -33,11 +37,19 @@ public class PlayerResources : MonoBehaviour
     {
         currentScrap += scrap;
     }
+
+    public void LoseScrap()
+    {
+        currentScrap -= scraptLostOnHit;
+    }
     public void AddRage(float rage)
     {
         currentRage += rage;
     }
-
+    public void LoseRage()
+    {
+        currentRage -= currentRage * (1 - 0.15f);
+    }
     void RageBarFiller()
     {
         rageBar.fillAmount = currentRage / maxRage;

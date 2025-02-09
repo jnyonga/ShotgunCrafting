@@ -3,10 +3,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [Header("Bullet Settings")]
-    [SerializeField] float bulletSpeed;
     [SerializeField] float damage;
-    [SerializeField] float bulletDuration;
-    private Transform target;
 
     private void Update()
     { 
@@ -18,9 +15,25 @@ public class Bullet : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("Player Hit");
-            PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>();
-            player.TakeDamage(damage);
+            
+            PlayerHealth playerHealth = other.gameObject.GetComponent<PlayerHealth>();
+            PlayerResources playerResources = other.gameObject.GetComponent<PlayerResources>();
+
+            //player loses health
+            playerHealth.TakeDamage(damage);
+
+            //player loses scrap
+            playerResources.LoseScrap();
+
+            //player loses rage
+            playerResources.LoseRage();
+
             Destroy(gameObject);
         }
+        else if (other.gameObject.tag == "Ground")
+        {
+            Destroy(gameObject);
+        }
+        
     }
 }

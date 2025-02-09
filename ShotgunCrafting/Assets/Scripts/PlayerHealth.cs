@@ -32,4 +32,9 @@ public class PlayerHealth : MonoBehaviour
     {
         health -= damage;
     }
+
+    public void GainHealth()
+    {
+        health += 25f;
+    }
 }
