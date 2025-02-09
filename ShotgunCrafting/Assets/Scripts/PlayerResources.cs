@@ -1,20 +1,26 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class PlayerResources : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI scrapText;
-    [SerializeField] TextMeshProUGUI rageText;
+    [SerializeField] Image rageBar;
     [SerializeField] public int currentScrap = 0;
     [SerializeField] public float currentRage = 0f;
+    float maxRage = 200f;
 
+    private void Start()
+    {
+        currentRage = 0f;
+    }
     private void Update()
     {
         scrapText.text = currentScrap.ToString();
-        rageText.text = currentRage.ToString();
+        RageBarFiller();
 
-        if (currentRage > 200f)
-            currentRage = 200f;
+        if (currentRage > maxRage)
+            currentRage = maxRage;
 
         if (currentRage < 0f)
             currentRage = 0f;
@@ -30,5 +36,10 @@ public class PlayerResources : MonoBehaviour
     public void AddRage(float rage)
     {
         currentRage += rage;
+    }
+
+    void RageBarFiller()
+    {
+        rageBar.fillAmount = currentRage / maxRage;
     }
 }

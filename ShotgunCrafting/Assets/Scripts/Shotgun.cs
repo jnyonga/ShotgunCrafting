@@ -11,6 +11,7 @@ public class Shotgun : MonoBehaviour
     Renderer shotgunRenderer;
     [SerializeField] Material[] shotgunMaterials;
     private float damage;
+    public float brokenDamage;
     public float lvlOneDamage;
     public float lvlTwoDamage;
     public float lvlThreeDamage;
@@ -66,7 +67,11 @@ public class Shotgun : MonoBehaviour
         //Change material based on level
         //Change damage based on level
 
-        if (isLvlOne)
+        if (durability <= 0)
+        {
+            damage = brokenDamage;
+        }
+        if (isLvlOne & durability != 0)
         {
             shotgunRenderer.material = shotgunMaterials[0];
             damage = lvlOneDamage;
@@ -93,7 +98,7 @@ public class Shotgun : MonoBehaviour
     {
         if (context.performed)
         {
-            if (ammo != 0 && canShoot && durability > 0)
+            if (ammo != 0 && canShoot)
             {
                 Shoot();
                 Debug.DrawRay(muzzle.transform.position, muzzle.transform.forward * maxDistance, Color.red, 2f);
