@@ -1,17 +1,24 @@
 using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] PlayerHealth playerHealth;
     [SerializeField] Transform[] spawnPoints;
     [SerializeField] GameObject enemy;
-    int maxEnemies = 10;
+    int maxEnemies = 12;
     public float spawnInterval = 5f;
 
     private float spawnTimer = 0f;
 
     private void Update()
     {
+        if(playerHealth.health <= 0)
+        {
+            SceneManager.LoadScene(0);
+        }
+
         int enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
         if (enemyCount < maxEnemies)

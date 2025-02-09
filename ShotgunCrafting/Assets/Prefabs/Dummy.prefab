@@ -153,8 +153,8 @@ MonoBehaviour:
   projectile: {fileID: 1109563596272581994, guid: f5f1a7ff7aa652848ae1cd4bc8cf9666, type: 3}
   attackForwardForce: 35
   attackUpwardForce: 4
-  sightRange: 35
-  attackRange: 24
+  sightRange: 25
+  attackRange: 15
   playerInSightRange: 0
   playerInAttackRange: 0
 --- !u!195 &208085700832276622
