@@ -149,9 +149,9 @@ MonoBehaviour:
     m_Bits: 64
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 5
-  timeBetweenAttacks: 0.5
+  timeBetweenAttacks: 1
   projectile: {fileID: 1109563596272581994, guid: f5f1a7ff7aa652848ae1cd4bc8cf9666, type: 3}
-  attackForwardForce: 40
+  attackForwardForce: 35
   attackUpwardForce: 4
   sightRange: 35
   attackRange: 24

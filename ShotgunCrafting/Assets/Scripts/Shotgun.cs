@@ -18,10 +18,14 @@ public class Shotgun : MonoBehaviour
     private bool canShoot = true;
     [SerializeField] TextMeshProUGUI ammoCounterText;
     [SerializeField] GameObject muzzle;
+    [SerializeField] GameObject barrel;
     [SerializeField] int ammo;
     [SerializeField] float maxDistance = 50f;
     private bool isReloading = false;
     [SerializeField] float reloadSpeed = 0.5f;
+
+    [SerializeField] private ParticleSystem ImpactParticleSystem;
+    [SerializeField] private TrailRenderer bulletTrail;
 
     public bool isLvlOne;
     public bool isLvlTwo;
@@ -158,6 +162,11 @@ public class Shotgun : MonoBehaviour
             if (Physics.Raycast(muzzle.transform.position, muzzle.transform.forward, out RaycastHit hit1, maxDistance))
             {
                 Debug.Log(hit1.collider.gameObject.name + " was hit by ray1!");
+
+            //show bullet trail
+            TrailRenderer trail = Instantiate(bulletTrail, barrel.transform.position, Quaternion.identity);
+            StartCoroutine(SpawnTrail(trail, hit1));
+
                 if (hit1.collider.gameObject.GetComponent<EnemyHealth>() != null)
                 {
                     hit1.collider.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
@@ -170,7 +179,12 @@ public class Shotgun : MonoBehaviour
             if (Physics.Raycast(muzzle.transform.position, Quaternion.Euler(-2, 1, 0) * muzzle.transform.forward, out RaycastHit hit2, maxDistance))
             {
                 Debug.Log(hit2.collider.gameObject.name + " was hit by ray2!");
-                if (hit2.collider.gameObject.GetComponent<EnemyHealth>() != null)
+
+            //show bullet trail
+            TrailRenderer trail = Instantiate(bulletTrail, barrel.transform.position, Quaternion.identity);
+            StartCoroutine(SpawnTrail(trail, hit2));
+
+            if (hit2.collider.gameObject.GetComponent<EnemyHealth>() != null)
                 {
                     hit2.collider.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
                     playerResourcesScript.currentRage += damage;
@@ -180,7 +194,12 @@ public class Shotgun : MonoBehaviour
             if (Physics.Raycast(muzzle.transform.position, Quaternion.Euler(-2, -1, 0) * muzzle.transform.forward, out RaycastHit hit3, maxDistance))
             {
                 Debug.Log(hit3.collider.gameObject.name + " was hit by ray3!");
-                if (hit3.collider.gameObject.GetComponent<EnemyHealth>() != null)
+
+            //show bullet trail
+            TrailRenderer trail = Instantiate(bulletTrail, barrel.transform.position, Quaternion.identity);
+            StartCoroutine(SpawnTrail(trail, hit3));
+
+            if (hit3.collider.gameObject.GetComponent<EnemyHealth>() != null)
                 {
                     hit3.collider.gameObject.GetComponent<EnemyHealth>().TakeDamage(damage);
                     playerResourcesScript.currentRage += damage;
@@ -189,6 +208,24 @@ public class Shotgun : MonoBehaviour
         
     }
 
+    private IEnumerator SpawnTrail(TrailRenderer trail, RaycastHit hit)
+    {
+        float time = 0;
+        Vector3 startPosition = trail.transform.position;
+
+        while (time < 1)
+        {
+            trail.transform.position = Vector3.Lerp(startPosition, hit.point, time);
+            time += Time.deltaTime / trail.time;
+
+            yield return null;
+        }
+
+        trail.transform.position = hit.point;
+        Instantiate(ImpactParticleSystem, hit.point, Quaternion.LookRotation(hit.normal));
+
+        Destroy(trail.gameObject, trail.time);
+    }
     void DurabilityDrain()
     {
         if (durability > 0)
