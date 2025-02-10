@@ -23,6 +23,9 @@ public class PlayerResources : MonoBehaviour
         if (currentRage > maxRage)
             currentRage = maxRage;
 
+        if(currentScrap > 200)
+            currentRage = 200;
+
         if (currentRage < 0f)
             currentRage = 0f;
 
